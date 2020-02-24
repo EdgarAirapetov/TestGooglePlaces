@@ -72,7 +72,7 @@
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toBottomOf="@+id/btn_show_places"
-        tools:context=".ui.activity.MapsActivity" />
+        tools:context=".presentation.MapsActivity" />
 
     <include
         android:id="@+id/progress"

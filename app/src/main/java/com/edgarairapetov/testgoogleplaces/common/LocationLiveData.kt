@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import androidx.lifecycle.LiveData
-import com.edgarairapetov.testgoogleplaces.utils.LocationUtils.Companion.MAX_LOCATION_ACCURACY
-import com.edgarairapetov.testgoogleplaces.utils.LocationUtils.Companion.getLocationRequest
+import com.edgarairapetov.testgoogleplaces.common.LocationUtils.Companion.MAX_LOCATION_ACCURACY
+import com.edgarairapetov.testgoogleplaces.common.LocationUtils.Companion.getLocationRequest
 import com.google.android.gms.location.*
 
 class LocationLiveData(appContext: Context) : LiveData<Location>() {
@@ -36,12 +36,14 @@ class LocationLiveData(appContext: Context) : LiveData<Location>() {
 
             override fun onLocationAvailability(p0: LocationAvailability?) {
                 super.onLocationAvailability(p0)
-                if (!p0!!.isLocationAvailable)
-                    fusedLocationClient.requestLocationUpdates(
-                        getLocationRequest(),
-                        locationCallback,
-                        null
-                    )
+                p0?.let { locationAvailability ->
+                    if (!locationAvailability.isLocationAvailable)
+                        fusedLocationClient.requestLocationUpdates(
+                            getLocationRequest(),
+                            locationCallback,
+                            null
+                        )
+                }
             }
         }
         fusedLocationClient.lastLocation.addOnCompleteListener {
